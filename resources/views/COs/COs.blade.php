@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{ $CO->name }}</td>
                             <td>{{ $CO->description }}</td>
-                            <td>{{ $CO->co_as_weight }}</td>
+                            <td>{{ $CO->CO_GR_as_weight }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -79,7 +79,8 @@ Route::get('/getGRsAndCCPs/{course_code}', 'GRController@getGRsAndCCPs');
 Route::get('/editGRAndCCPs/{gr_code}/course/{course_code}', 'GRController@editGRAndCCPs');
 Route::post('/GRs/bind/{gr_code}/course/{course_code}', 'GRController@addGRAndCCPS');
 
-
+Route::get('/CMs/{course_code}','CMController@show');
+Route::post('/CMs/{course_code}','CMController@addCM');
 Route::get('/COs/{course_code}', 'COController@getCOs');
 Route::get('/editCOs/{course_code}', 'COController@editCOs');
 Route::post('/COs/{course_code}', 'COController@create');

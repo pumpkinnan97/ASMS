@@ -23,6 +23,9 @@
                                 <span class="forCOs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>课程目标管理(CO)</span></span>
                             </li>
                             <li>
+                                <span class="forCMs" data-code="{{$course->course_code}}"><i class="icon-leaf">课程模块信息管理(CM)</i> </span></span>
+                            </li>
+                            <li>
                                 <span class="forCCPs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>课程考核点管理(CCP)</span></span>
                             </li>
                             <li>
@@ -68,7 +71,13 @@
                 $("#module").html(result);
             });
         });
-
+        $('.forCMs').click(function () {
+           var course_code=$(this).attr('data-code');
+            markSelected(this);
+            $.get("{{url('CMs')}}/"+course_code,function (result) {
+                $("#module").html(result);
+            });
+        });
         $('.forCCPs').click(function (){
             var course_code = $(this).attr('data-code');
             markSelected(this);
