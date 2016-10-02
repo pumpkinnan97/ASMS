@@ -66,13 +66,23 @@ Route::get('/', function () {
     return view('welcome');
 //    return view('auth.casLogin');
 });
+Route::get('/addGRs','GRController@addGRs');
 Route::get('/dologin', 'CasAuthController@login');
 
 Route::get('/index', 'indexController@index');
-
+Route::post('/editGRs/{gr_code}','GRController@updateGRs');
+Route::get('/editGRs/','GRController@editGRs');
 Route::get('/GRs', 'GRController@getGRs');
+Route::post('/GRs', 'GRController@getGRs');
 Route::post('/GR/update/{gr_code}', 'COController@update');
 Route::get('/editGRs', 'GRController@editGRs');
+Route::post('/editGRs', 'GRController@editGRs');
+Route::post('/addGR','GRController@add');
+Route::get('/addGR','GRController@add');
+Route::delete('/deleteGR/{gr_code}',"GRController@deleteGR");
+Route::get('/addGRCourses','GRController@addGRCourses');
+Route::post('/addGRCourse','GRController@addGRCourse');
+Route::get('/addGRCourse','GRController@addGRCourse');
 Route::get('/GR/{GRCode}', 'GRController@editGRsCourses');
 Route::post('/GR/update/{gr_code}/course/{course_code}', 'GRController@updateGRsCourse');
 Route::get('/getGRsAndCCPs/{course_code}', 'GRController@getGRsAndCCPs');

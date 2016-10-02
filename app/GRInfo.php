@@ -25,6 +25,6 @@ class GRInfo extends Model
      *
      * @var array
      */
-    protected $fillable = ['gr_code', 'name', 'standart_description','ise_description', 'achievment_scale', 'expected_achievement_scale','gr_ALLGR_weight', 'CO_GR_rest_weight','ccp_GR_rest_weight'];
+    protected $fillable = ['gr_code', 'name', 'standart_description','ise_description', 'achievment_scale', 'expected_achievement_scale','gr_ALLGR_weight', 'CO_GR_rest_as_weight','ccp_GR_rest_as_weight'];
 
 }

@@ -3,9 +3,6 @@
         <div class="panel-heading">毕业要求指标(GR)</div>
         <div class="panel-body">
             <table class="table table-bordered" contenteditable="false">
-
-                {{--<button type="button" class="forEditGRs btn btn-default">编辑</button>--}}
-                {{--<button type="button" class="btn btn-default">提交</button>--}}
                 <thead>
                 <tr>
                     {{--<th>指标编号</th>--}}
@@ -43,8 +40,9 @@
                         <th>名称</th>
                         <th class="col-md-2">原始描述</th>
                         <th class="col-md-2">自定义描述</th>
-                        <th class="col-md-3">高关联度课程</th>
-                        <th>权重</th>
+                        <th>对应父项GR权重</th>
+                        <th>相对子项CO剩余权重</th>
+                        <th>相对子项ccp剩余权重</th>
                         {{--<th>操作</th>--}}
                     </tr>
                     </thead>
@@ -55,22 +53,9 @@
                             <td>{{ $childGRInfo['gr']->name }}</td>
                             <td>{{ $childGRInfo['gr']->standart_description }}</td>
                             <td>{{ $childGRInfo['gr']->ise_description }}</td>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <th>课程名称</th>
-                                        <th>权重</th>
-                                    </tr>
-                                    @foreach($childGRInfo['courses'] as $course)
-                                        <tr>
-                                            <td>{{ $course['name'] }}</td>
-                                            <td>{{ $course['weight'] }}</td>
-                                        </tr>
-                                    @endforeach
-
-                                </table>
-                            </td>
-                            <td>{{ $childGRInfo['gr']->gr_as_weight }}</td>
+                            <td>{{ $childGRInfo['gr']->gr_ALLGR_weight }}</td>
+                            <td>{{$childGRInfo['gr']->CO_GR_rest_as_weight}}</td>
+                            <td>{{$childGRInfo['gr']->ccp_GR_rest_as_weight}}</td>
                             {{--<td><button class="forEditGRsCourses btn btn-default" type="button" data-gr-code="{{ $childGRInfo['gr']->gr_code }}">编辑关联课程</button></td>--}}
                         </tr>
                     @endforeach

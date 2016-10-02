@@ -6,7 +6,7 @@ use App\CCPToCOASWeightCriteria;
 use App\CCPToGRASWeightCriteria;
 use App\Repositories\CCPRepository;
 use Illuminate\Http\Request;
-
+use App\GRInfo;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\COInfo;
@@ -14,8 +14,8 @@ use App\Repositories\CORepository;
 use App\CourseInfo;
 use App\StudentCCP;
 use App\Repositories\GRRepository;
+use Illuminate\Support\Facades\DB;
 use Mockery\CountValidator\Exception;
-
 class COController extends Controller
 {
     /**
@@ -74,9 +74,13 @@ class COController extends Controller
      */
     public function editCOs(Request $request, $course_code)
     {
+        $GRs=GRInfo::all();
+        $to_GRs=DB::select("SELECT * FROM gr_courses WHERE course_code=?",[$course_code]);
         return view('COs.editCOs', [
             "COs" => $this->CORepository->forCourse($course_code),
             "course_code" => $course_code,
+            "GRs"=>$GRs,
+            "TOGRs"=>$to_GRs,
             "new_CO_id" => $this->CORepository->nextCOCode($course_code),
         ]);
     }
@@ -88,8 +92,8 @@ class COController extends Controller
      */
     public function create(Request $request, $course_code)
     {
+        static $arr=array();
         $COinfo = new COInfo();
-
         $COinfo->course_code = $course_code;
         $COinfo->co_code = '2014-2015-1'.$course_code.'_'.$request->name;
         $COinfo->name = $request->name;
@@ -97,8 +101,41 @@ class COController extends Controller
         $COinfo->english_description = $request->english_description;
         $COinfo->expected_scale = $request->expected_scale;
         $COinfo->achivement_scale=$request->achivement_scale;
-        $COinfo->CO_GR_as_weight = $request->CO_GR_as_weight;
+        if($request->CO_GR1!="" && $request->weight1!=""){
+            $to_GR=DB::select("select * from gr_infos where gr_code =?",[$request->CO_GR1]);
+            $rest_wight=$to_GR[0]->CO_GR_rest_as_weight-$request->weight1;
+            if($rest_wight>=0) {
+                $arr[] = [$request->CO_GR1 => $request->weight1];
+                DB::update("UPDATE gr_infos set CO_GR_rest_as_weight = ? where gr_code=?",[$rest_wight,$request->CO_GR1]);
+            }
+            }
+        if ($request->CO_GR2!="" && $request->weight2!=""){
+            $to_GR=DB::select("select * from gr_infos where gr_code =?",[$request->CO_GR2]);
+            $rest_wight=$to_GR[0]->CO_GR_rest_as_weight-$request->weight2;
+            if($rest_wight>=0) {
+                $arr[] = [$request->CO_GR2 => $request->weight2];
+                DB::update("UPDATE gr_infos set CO_GR_rest_as_weight = ? where gr_code=?",[$rest_wight,$request->CO_GR2]);
+            }
+            }
+        if ($request->CO_GR3!="" && $request->weight3!=""){
+            $to_GR=DB::select("select * from gr_infos where gr_code =?",[$request->CO_GR3]);
+            $rest_wight=$to_GR[0]->CO_GR_rest_as_weight-$request->weight3;
+            if($rest_wight>=0) {
+                $arr[] = [$request->CO_GR3 => $request->weight3];
+                DB::update("UPDATE gr_infos set CO_GR_rest_as_weight = ? where gr_code=?",[$rest_wight,$request->CO_GR3]);
+            }
+        }
+        if ($request->CO_GR4!="" && $request->weight4!=""){
+            $to_GR=DB::select("select * from gr_infos where gr_code =?",[$request->CO_GR4]);
+            $rest_wight=$to_GR[0]->CO_GR_rest_as_weight-$request->weight4;
+            if($rest_wight>=0) {
+                $arr[] = [$request->CO_GR4 => $request->weight4];
+                DB::update("UPDATE gr_infos set CO_GR_rest_as_weight = ? where gr_code=?",[$rest_wight,$request->CO_GR4]);
+            }
+        }
 
+        $COinfo->CO_GR_as_weight = json_encode($arr);
+        $COinfo->ccp_CO_rest_as_weight=1;
         $COinfo->save();
 
         return json_encode(array('status' => 'true'));
@@ -130,36 +167,6 @@ class COController extends Controller
     public function destroy(Request $request, $co_id)
     {
         COInfo::destroy($co_id);
-
-        //解析co_code获取course_code和number
-//        $co_strs = explode("_", $co_code);
-//        $course_code = $co_strs[0];
-//        $co_num = $co_strs[2];
-//        $total_co_num = $this->CORepository->COsNumber($course_code);
-//        $co = COInfo::where('co_code', $course_code."_co_".($co_num + 1))->delete();
-
-//        $counter = 0;
-//        if ($total_co_num != $co_num){
-//            for ($i = $co_num + 1; $i <= $total_co_num + 1; $i++)
-//            {
-//                $co = COInfo::where('co_code', $course_code."_co_".$i)->get();
-
-//                $new_co = new COInfo();
-//                $new_co->co_code = $course_code."_co_".($i - 1);
-//                $new_co->course_code = $course_code;
-//                $new_co->name = $co->name;
-//                $new_co->description = $co->description;
-//                $new_co->english_description = $co->english_description;
-//                $new_co->expected_achievement_scale = $co->expected_achievement_scale;
-//                $new_co->co_as_weight = $co->co_as_weight;
-//                $new_co->save();
-
-//                COInfo::where('co_code', $course_code."_co_".$i)->delete();
-//
-//                $counter++;
-//            }
-//        }
-
         return json_encode(array('status' => 'true'));
     }
 

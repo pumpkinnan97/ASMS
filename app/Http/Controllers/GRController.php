@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\CCPToGRASWeightCriteria;
+use App\CourseInfo;
 use App\Repositories\CCPRepository;
+use DaveJamesMiller\Breadcrumbs\View;
+use Doctrine\DBAL\Platforms\Keywords\ReservedKeywordsValidator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,7 +15,9 @@ use App\Http\Controllers\Controller;
 // use App\Task;
 use App\Repositories\GRRepository;
 use App\GRInfo;
+use App\ALLGR;
 use App\GRCourses;
+use Illuminate\Support\Facades\DB;
 
 class GRController extends Controller
 {
@@ -52,8 +57,8 @@ class GRController extends Controller
     {
 //        dd($this->GRRespository->forGRsRelations(2));
         return view('GRs.GRs', [
-            'GRs1' => $this->GRRespository->forGRAtLevel(1),
-            'GRDetails' => $this->GRRespository->forGRsRelations(2),
+            'GRs1' => $this->GRRespository->forGRAtLevel(),
+            'GRDetails' => $this->GRRespository->forGRsRelations(),
         ]);
     }
 
@@ -65,16 +70,37 @@ class GRController extends Controller
     public function editGRs()
     {
         return view('GRs.editGRs',[
-            'GRs' => $this->GRRespository->forGRAtLevel(1),
+            'GRs' => $this->GRRespository->forGRs(),
         ]);
     }
 
-    public function update()
+    public function updateGRs(Request $request,$gr_code)
     {
-
+        DB::update("UPDATE gr_infos SET name = ? ,standart_description = ?,ise_description = ?,gr_ALLGR_weight = ? where gr_code =?",[$request
+        ->name,$request->standart_description,$request->ise_description,$request->gr_ALLGR_weight,$gr_code]);
     }
-    
-
+    public function addGRs(Request $request){
+        $ALLGRs=ALLGR::all();
+        $GRs=GRInfo::all();
+        return view('GRs.addGRs',["ALLGRs"=>$ALLGRs,"GRs"=>$GRs]);
+    }
+    public function add(Request $request){
+        $new_GR=new GRInfo();
+        $new_GR->gr_code=$request->gr_code;
+        $new_GR->name=$request->name;
+        $new_GR->standart_description=$request->standart_description;
+        $new_GR->ise_description=$request->ise_description;
+        $new_GR->gr_ALLGR_weight=$request->gr_ALLGR_weight;
+        $new_GR->CO_GR_rest_as_weight=1.00;
+        $new_GR->ccp_GR_rest_as_weight=1.00;
+        $new_GR->save();
+        return json_encode(array('status' => 'true'));
+}
+    public function deleteGR(Request $request, $gr_code)
+    {
+        GRInfo::destroy($gr_code);
+        return json_encode(array('status' => 'true'));
+    }
     /**
      * Display current GR's relationship with courses
      *
@@ -99,8 +125,16 @@ class GRController extends Controller
         return json_encode(array('status' => 'true'));
     }
 
-
-
+    public function addGRCourses(Request $request){
+        $GRs=GRInfo::all();
+        $courses=CourseInfo::all();
+        return view('GRs.addGRCourses',["GRs"=>$GRs,"courses"=>$courses]);
+    }
+    public function addGRCourse(Request $request){
+        $gr_code=GRInfo::where("name",$request->GR_name)->first();
+        $course_code=CourseInfo::where("name",$request->Course_name)->first();
+        DB::insert("INSERT INTO gr_courses(gr_code,course_code) VALUES (?,?)",[$gr_code->gr_code,$course_code->course_code]);
+    }
     /**
      * Display the a list of the course_code's GRs and CCPs belong to it.
      *
@@ -169,5 +203,14 @@ class GRController extends Controller
             CCPToGRASWeightCriteria::where('gr_code',$gr_code)->where('course_code',$course_code)->update(array('gr_code'=>$gr_code,'course_code'=>$course_code,'criterion'=>serialize($request->selectedCCP)));
         }
         return json_encode(array('status' => 'true'));
+    }
+    public function saveGRs(Request $request,$gr_code){
+       // $GR=GRInfo::find($gr_code);
+       // $GR->name=$request->name;
+        var_dump($request);
+      //  $GR->standart_description=$request->standart_description;
+       // $GR->ise_description=$request->ise_description;
+      //  $GR->gr_ALLGR_weight=$request->gr_ALLGR_as_weight;
+      // $GR->save();
     }
 }

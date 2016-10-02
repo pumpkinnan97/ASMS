@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-
+use App\ALLGR;
 use App\CourseInfo;
 use App\GRInfo;
 use App\GRCourses;
@@ -12,18 +12,13 @@ class GRRepository
 {
     public function forGRs()
     {
-        $resultSet = array();
-        $maxLevel = GRInfo::max('level');
-        for ($i = 0; $i < $maxLevel; $i++)
-        {
-            $resultSet[$i] = GRInfo::where('level', $i + 1)->get();
-        }
+        $resultSet = GRInfo::all();
         return empty($resultSet) ? false : $resultSet;
     }
 
-    public function forGRAtLevel($level)
+    public function forGRAtLevel()
     {
-        $resultSet = GRInfo::where('level', $level)->get();
+        $resultSet = ALLGR::all();
         return empty($resultSet) ? false : $resultSet;
     }
 
@@ -46,11 +41,10 @@ class GRRepository
         return $resultSet;
     }
 
-    public function forGRsRelations()
+    public function  forGRsRelations()
     {
-        $level1GRSet = GRInfo::where('level', 1)->get();
+        $level1GRSet = ALLGR::all();
         $resultSet = array();
-
         $counter = 0;
         foreach ($level1GRSet as $level1GR)
         {
@@ -62,14 +56,15 @@ class GRRepository
             {
                 $resultSet[$counter]['level2'][$level2GRSetCounter]['gr'] = $level2GR;
 
-                $courseCodes = GRCourses::where('gr_code', $level2GR->gr_code)->get();
+                $courseCodes = GRCourses::where('gr_code', $level2GR->gr_name)->get();
 
                 $coursesArr = array();
                 $courseCodeCounter = 0;
                 foreach ($courseCodes as $courseCode)
                 {
-                    $course_codes = explode(',', $courseCode->course_code);
-                    $courseInfo = CourseInfo::where('course_code', $course_codes[0])->get();
+                    //$course_codes = explode(',', $courseCode->course_code);
+                   // $courseInfo = CourseInfo::where('course_code', $course_codes[0])->get();
+                    $courseInfo=CourseInfo::where('course_code',$courseCode->course_code)->get();
                     $coursesArr[$courseCodeCounter]['name'] = empty($courseInfo[0]->name)? "none" : $courseInfo[0]->name;
                     $coursesArr[$courseCodeCounter]['weight'] = $courseCode->cs_to_gr_as_weight;
                     $courseCodeCounter++;

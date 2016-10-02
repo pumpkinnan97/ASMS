@@ -6,6 +6,8 @@
         <th>CM名称</th>
         <th>课程代码</th>
         <th>描述</th>
+        <th>对应CO</th>
+        <th>对应GR</th>
         @foreach($CMs as $CM)
             <tr>
                 <td>
@@ -19,6 +21,23 @@
                 </td>
                 <td>
                     {{$CM->description}}
+                <td>
+                   <?php
+                    $CM_COs=DB::select("select co_code from cm_cos where cm_code=?",[$CM->cm_code]);
+                        foreach ($CM_COs as $CM_CO){
+                            echo $CM_CO->co_code;
+                            echo "、";
+                        }
+                ?>
+                </td>
+                <td>
+                    <?php
+                    $CM_GRs=DB::select("select gr_name from cm_gr where cm_code=?",[$CM->cm_code]);
+                    foreach ($CM_GRs as $CM_GR){
+                        echo $CM_GR->gr_name;
+                        echo "、";
+                    }
+                ?>
                 </td>
             </tr>
             @endforeach
