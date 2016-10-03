@@ -2,16 +2,16 @@
 <div class="col-md-12">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">上传CCP文件</div>
+        <!--<div class="panel-heading">上传CCP文件</div>
             <div class="panel-body">
-                <form action="{{ url('/upload') }}/{{ $course_code }}/ccpTemp" method="POST" enctype="multipart/form-data">
+                <form action="{{url('/upload') }}/{{ $course_code }}/ccpTemp" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input class="btn btn-danger-alt" type="file" name="file"><br/><br/>
                     <input class="btn btn-success" type="submit" value="提交"/>
                     <input id="cancel" class="btn btn-brown-alt col-md-3" type="button" value="取消"/>
                 </form>
             </div>
-        </div>
+        </div>-->
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">课程考核点管理(CCP)</div>

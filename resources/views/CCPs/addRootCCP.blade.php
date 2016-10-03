@@ -38,7 +38,7 @@
                 description : $("#ccp_description").val(),
                 standard_score : $("#standard_score").val(),
                 expected_score : $("#expected_score").val(),
-                is_leaf_ccp : 1,
+                is_leaf_ccp : 1
             },
             dataType: 'json',
             headers: {

@@ -13,5 +13,7 @@ class CCPInfo extends Model
      *
      * @var string
      */
+    protected $fillable=['id','ccp_code','is_leaf_ccp','name','description','standard_score','expected_score','actual_score','level',
+    'ccp_CO_as_weight','ccp_GR_as_weight'];
     public $timestamps = false;
 }

@@ -7,7 +7,6 @@
         <th>课程代码</th>
         <th>描述</th>
         <th>对应CO</th>
-        <th>对应GR</th>
         @foreach($CMs as $CM)
             <tr>
                 <td>
@@ -28,15 +27,6 @@
                             echo $CM_CO->co_code;
                             echo "、";
                         }
-                ?>
-                </td>
-                <td>
-                    <?php
-                    $CM_GRs=DB::select("select gr_name from cm_gr where cm_code=?",[$CM->cm_code]);
-                    foreach ($CM_GRs as $CM_GR){
-                        echo $CM_GR->gr_name;
-                        echo "、";
-                    }
                 ?>
                 </td>
             </tr>
@@ -61,34 +51,6 @@
     <input name="name" id="name">
     <p>请填写CM英文名称</p>
     <input name="EN_name" id="EN_name">
-    <p>请选择对应的GR1</p>
-    <select name="CM_GR1" id="CM_GR">
-            <option value=""> 空</option>
-        @foreach($GRs as $GR)
-            <option value="{{$GR->name}}">{{$GR->name}}</option>
-            @endforeach
-    </select>
-    <p>请选择对应的GR2</p>
-    <select name="CM_GR2" id="CM_GR">
-        <option value=""> 空</option>
-        @foreach($GRs as $GR)
-            <option value="{{$GR->name}}">{{$GR->name}}</option>
-        @endforeach
-    </select>
-    <p>请选择对应的GR3</p>
-    <select name="CM_GR3" id="CM_GR">
-        <option value=""> 空</option>
-        @foreach($GRs as $GR)
-            <option value="{{$GR->name}}">{{$GR->name}}</option>
-        @endforeach
-    </select>
-    <p>请选择对应的GR4</p>
-    <select name="CM_GR4" id="CM_GR">
-        <option value=""> 空</option>
-        @foreach($GRs as $GR)
-            <option value="{{$GR->name}}">{{$GR->name}}</option>
-        @endforeach
-    </select>
     <p>请选择对应的CO信息</p>
     @for($i=1;$i<=$count;$i++)
         <select name="{{$i}}" id="CM_CO">

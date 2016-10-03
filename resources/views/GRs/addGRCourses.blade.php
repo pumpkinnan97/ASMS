@@ -4,6 +4,7 @@
     <tr>
         <th>GR名称</th>
         <th>对应课程</th>
+        <th>操作</th>
     </tr>
     @foreach($GRs as $GR)
     <tr>
@@ -15,6 +16,9 @@
                     echo "、";
                 }
         ?></td>
+        <td><form action="{{url("deleteGRCourse/$GR->gr_code")}}" method="post">
+            <input type="submit" value="删除关联信息">
+        </form></td>
     </tr>
         @endforeach
 </table>
@@ -41,7 +45,7 @@
             </td>
             <td><select name="Course_name">
                     @foreach($courses as $course)
-                        <option value="{{$course->name}}">{{$course->name}}</option>
+                        <option value="{{$course->name}}">{{$course->course_code}}{{$course->name}}</option>
                         @endforeach
                 </select> </td>
             <td>

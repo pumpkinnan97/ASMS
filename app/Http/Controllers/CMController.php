@@ -28,26 +28,6 @@ class CMController extends Controller
         $CM->description=$request->description;
         $CM->english_description=$request->english_description;
         $CM->save();
-        $CO_obj_count=DB::select("select count(1) as COUNT from co_infos WHERE course_code=?",[$course_code]);
-        $CO_count=$CO_obj_count[0]->COUNT;
-        $arr=get_object_vars($request);
-        for($i=1;$i<=$CO_count;$i++) {
-            if($request->$i!="") {
-                DB::insert("insert into cm_cos (cm_code,co_code) VALUES (?,?)", [$CM->cm_code, "CO$i"]);
-            }
-        }
-        if($request->CM_GR1!=""){
-            DB::insert("INSERT INTO cm_gr (cm_code,gr_name) VALUES (?,?)",[$CM->cm_code,$request->CM_GR1]);
-        }
-        if($request->CM_GR2!=""){
-            DB::insert("INSERT INTO cm_gr (cm_code,gr_name) VALUES (?,?)",[$CM->cm_code,$request->CM_GR2]);
-        }
-        if($request->CM_GR3!=""){
-            DB::insert("INSERT INTO cm_gr (cm_code,gr_name) VALUES (?,?)",[$CM->cm_code,$request->CM_GR3]);
-        }
-        if($request->CM_GR4!=""){
-            DB::insert("INSERT INTO cm_gr (cm_code,gr_name) VALUES (?,?)",[$CM->cm_code,$request->CM_GR4]);
-        }
         return "SAVE SUCCEED!";
     }
 }

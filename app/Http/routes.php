@@ -83,6 +83,7 @@ Route::delete('/deleteGR/{gr_code}',"GRController@deleteGR");
 Route::get('/addGRCourses','GRController@addGRCourses');
 Route::post('/addGRCourse','GRController@addGRCourse');
 Route::get('/addGRCourse','GRController@addGRCourse');
+Route::post('/deleteGRCourse/{gr_code}','GRController@deleteGRCourse');
 Route::get('/GR/{GRCode}', 'GRController@editGRsCourses');
 Route::post('/GR/update/{gr_code}/course/{course_code}', 'GRController@updateGRsCourse');
 Route::get('/getGRsAndCCPs/{course_code}', 'GRController@getGRsAndCCPs');
@@ -109,9 +110,11 @@ Route::get('/getStudentsCOGR/{course_code}', 'COController@getStudentsCOGR');
 
 
 Route::get('/CCPs/{course_code}', 'CCPController@getCCPs');
+Route::post('/CCPs/{course_code}', 'CCPController@getCCPs');
 Route::get('/addCCP/{parent_ccp_id}', 'CCPController@addCCP');
 Route::get('/editCCP/{id}', 'CCPController@editCCP');
 Route::post('/CCP/{ccp_code}', 'CCPController@create');
+Route::get('/CCP/{ccp_code}', 'CCPController@create');
 Route::post('/CCP/update/{id}', 'CCPController@update');
 Route::delete('/CCP/{id}', 'CCPController@destroyCCP');
 Route::get('/addRootCCP/{course_code}', 'CCPController@addRootCCP');

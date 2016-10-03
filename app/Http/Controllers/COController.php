@@ -166,6 +166,15 @@ class COController extends Controller
      */
     public function destroy(Request $request, $co_id)
     {
+        $CO=COInfo::find($co_id);
+        $weight_arr=json_decode($CO->CO_GR_as_weight,true);
+        foreach ($weight_arr as $weight_arr_single) {
+            foreach ($weight_arr_single as $gr_code => $weight) {
+                $GR = DB::select("SELECT * FROM gr_infos WHERE gr_code = ?", [$gr_code]);
+                $back = $GR[0]->CO_GR_rest_as_weight + $weight;
+                DB::update("UPDATE gr_infos SET CO_GR_rest_as_weight = ? WHERE gr_code= ?", [$back, $gr_code]);
+            }
+        }
         COInfo::destroy($co_id);
         return json_encode(array('status' => 'true'));
     }
