@@ -1,5 +1,5 @@
-<div class="col-md-6">
-    <table class="table table-hover" style="margin-bottom: 100px;">
+<div class="col-md-5">
+    <table class="table table-hover">
         <tr>
             <th>GR名称</th>
             <th>对应课程</th>
@@ -22,8 +22,8 @@
             @endforeach
     </table>
 </div>
-<div class="col-md-6">
-    <table class="table table-hover col-md-6">
+<div class="col-md-7">
+    <table class="table table-hover">
         <tr>
             <th>GR名称</th>
             <th>课程名称</th>
