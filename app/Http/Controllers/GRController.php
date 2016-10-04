@@ -115,7 +115,7 @@ class GRController extends Controller
         $ALLGR=DB::select("SELECT * FROM allgr_infos WHERE ALLGR_code=?",[$allgr_code[0][0]]);
         $back_weight=$ALLGR[0]->gr_ALLGR_rest_as_weight+$GR[0]->gr_ALLGR_weight;
         DB::update("UPDATE allgr_infos SET gr_ALLGR_rest_as_weight = ? WHERE ALLGR_code=?",[$back_weight,$allgr_code[0][0]]);
-        GRInfo::destroy($gr_code);
+        DB::delete("DELETE FROM gr_infos WHERE gr_code=?",[$gr_code]);
         return json_encode(array('status' => 'true'));
     }
     /**
