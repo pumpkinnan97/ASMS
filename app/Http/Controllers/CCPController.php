@@ -275,6 +275,25 @@ class CCPController extends Controller
         //判断是否为叶子节点
         if ($ccp->is_leaf_ccp == 1)
         {
+            /********************还原权重***********************/
+            $back_CO=DB::select("SELECT * FROM ccp_infos WHERE id =?",[$id]);
+            $back_GR=DB::select("SELECT * FROM ccp_infos WHERE id =?",[$id]);
+            $back_CO_arr=json_decode($back_CO[0]->ccp_CO_as_weight,1);
+            $back_GR_arr=json_decode($back_GR[0]->ccp_GR_as_weight,1);
+            foreach($back_CO_arr as $back_co_arr){
+                foreach ($back_co_arr as $CO_code => $weight){
+                    $co=DB::select("SELECT * FROM co_infos WHERE co_code =?",[$CO_code]);
+                    $rest_co_weight=$co[0]->ccp_CO_rest_as_weight;
+                    DB::update("UPDATE co_infos SET ccp_CO_rest_as_weight=? WHERE co_code=?",[$rest_co_weight+$weight,$CO_code]);
+                }
+        }
+            foreach ($back_GR_arr as $back_gr_arr) {
+                foreach ($back_gr_arr as $gr_code => $gr_weight) {
+                    $gr = DB::select("SELECT * FROM gr_infos WHERE gr_code =?", [$gr_code]);
+                    $rest_gr_weight = $gr[0]->ccp_GR_rest_as_weight;
+                    DB::update("UPDATE gr_infos SET ccp_GR_rest_as_weight =? WHERE gr_code=?", [$gr_weight + $rest_gr_weight, $gr_code]);
+                }
+            }
             CCPInfo::destroy($id);
 
             //判断父节点是否还有子节点
@@ -323,7 +342,7 @@ class CCPController extends Controller
     {
         $CCPinfo = new CCPInfo();
 
-        $strs = explode("_", $ccp_code);
+        $strs = explode("_ccp", $ccp_code);
         $CCPinfo->ccp_code = $ccp_code;
         $CCPinfo->level = 0;
         $CCPinfo->course_code = $strs[0];
