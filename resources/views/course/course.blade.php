@@ -77,7 +77,7 @@
         $.ajax({
                     type: "POST",
                     url: "/addCourse",
-                    dataType: "json",
+                    // dataType: "json",
                     data: {
                         term : $("#term").find("option:selected").text(),
                         course_code : $("#course_code").val(),
@@ -96,12 +96,12 @@
                         advice_books: $("#advice_books").val(),
                         cd_name: $("#cd_name").val(),                  
                     },
-                    // success : function (data) {
-                    //     alert("成功");
-                    // },
-                    // error : function (data) {
-                    //     console.log(data);
-                    // }
+                    success : function (data) {
+                        alert("成功");
+                    },
+                    error : function (data) {
+                        alert("失败，原因可能是已有该课程，具体原因请联系系统管理员！");
+                    }
                 });
          });
 </script>

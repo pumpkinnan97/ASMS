@@ -32,37 +32,6 @@
             @endforeach
     </table>
 </div>
-<!-- <form method="post" action="{{url("/CMs/$course_code")}}" >
-    <p>请选择CM模块</p>
-    <select name="cm_code" id="cm_code">
-        <option>CM1</option>
-        <option>CM2</option>
-        <option>CM3</option>
-        <option>CM4</option>
-        <option>CM5</option>
-        <option>CM6</option>
-        <option>CM7</option>
-        <option>CM8</option>
-    </select>
-    <p>请填写CM名称</p>
-    <input name="name" id="name">
-    <p>请填写CM英文名称</p>
-    <input name="EN_name" id="EN_name">
-    <p>请选择对应的CO信息</p>
-    @for($i=1;$i<=$count;$i++)
-        <select name="{{$i}}" id="CM_CO">
-            <option value=""> 空</option>
-            @foreach($COs as $CO)
-            <option value="{{$CO->name}}">{{$CO->name}}</option>
-                @endforeach
-        </select>
-        @endfor
-    <p>请填写描述</p>
-    <input type="text" name="description" id="description">
-    <p>请填写英文描述</p>
-    <input type="text" name="english_description" id="description">
-    <input type="submit">
-</form> -->
 <div class="col-md-5">
     <h1 class="text-center"><strong>添加CM</strong></h1>
     <form>
@@ -104,8 +73,30 @@
       </div>
       <div class="form-group">
         <label>请填写英文描述</label>
-        <input name="english_description" id="description" class="form-control">
+        <input name="english_description" id="english_description" class="form-control">
       </div>
-      <input type="submit" id="courseSubmit" class="btn btn-default"></input>
     </form>
+    <input type="submit" id="CMSubmit" class="btn btn-default"></input>
 </div>
+<script>
+    $("#CMSubmit").click(function () {
+        $.ajax({
+                    type: "POST",
+                    url: "/CMs/"+"{{$course_code}}",
+                    data: {
+                        cm_code : $("#cm_code").find("option:selected").text(),
+                        name: $("#name").val(),
+                        EN_name: $("#EN_name").val(),
+                        CM_CO: $("#CM_CO").find("option:selected").text(),
+                        description: $("#description").val(),
+                        english_description: $("#english_description").val(),
+                    },
+                    success : function (data) {
+                        alert("成功填写！");
+                    },
+                    error : function (data) {
+                        alert("失败,原因可能为选择了重复的CM模块或中英文描述不符合要求！");
+                    }
+                });
+         });
+</script>

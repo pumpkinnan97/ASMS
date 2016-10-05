@@ -16,8 +16,7 @@
                     }
             ?></td>
             <td><form action="{{url("deleteGRCourse/$GR->gr_code")}}" method="post">
-                <input type="submit" value="删除关联信息" class="btn-danger btn">
-            </form></td>
+                <input type="submit" value="删除关联信息" class="btn-danger btn"></td>
         </tr>
             @endforeach
     </table>
@@ -49,4 +48,8 @@
         </tr>
             </form>
     </table>
+    
 </div>
+<script>
+    
+</script>
