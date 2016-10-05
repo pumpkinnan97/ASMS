@@ -6,6 +6,7 @@
         <th>课程代码</th>
         <th>描述</th>
         <th>对应CO</th>
+        <th>操作</th>
         @foreach($CMs as $CM)
             <tr>
                 <td>
@@ -18,18 +19,21 @@
                     {{$CM->course_code}}
                 </td>
                 <td>
-                    {{$CM->description}}
+                {{$CM->description}}
                 <td>
-                   <?php
+                    <?php
                     $CM_COs=DB::select("select co_code from cm_cos where cm_code=?",[$CM->cm_code]);
-                        foreach ($CM_COs as $CM_CO){
-                            echo $CM_CO->co_code;
-                            echo "、";
-                        }
-                ?>
+                    foreach ($CM_COs as $CM_CO){
+                        echo $CM_CO->co_code;
+                        echo "、";
+                    }
+                    ?>
+                </td>
+                <td>
+                    <form method="post" action="{{url("/deleteCM/$CM->cm_code")}}"><input type="submit" value="删除"></form>
                 </td>
             </tr>
-            @endforeach
+        @endforeach
     </table>
 </div>
 <div class="col-md-5">
@@ -48,55 +52,55 @@
                 <option>CM8</option>
             </select>
         </div>
-      <div class="form-group">
-        <label>请填写CM名称</label>
-        <input name="name" id="name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>请填写CM英文名称</label>
-        <input name="EN_name" id="EN_name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>请选择对应的CO信息</label>
+        <div class="form-group">
+            <label>请填写CM名称</label>
+            <input name="name" id="name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>请填写CM英文名称</label>
+            <input name="EN_name" id="EN_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>请选择对应的CO信息</label>
             @for($i=1;$i<=$count;$i++)
                 <select name="{{$i}}" id="CM_CO" class="form-control">
                     <option value="">空</option>
                     @foreach($COs as $CO)
-                    <option value="{{$CO->name}}">{{$CO->name}}</option>
-                        @endforeach
+                        <option value="{{$CO->name}}">{{$CO->name}}</option>
+                    @endforeach
                 </select>
             @endfor
-      </div>
-      <div class="form-group">
-        <label>请填写描述</label>
-        <input name="description" id="description" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>请填写英文描述</label>
-        <input name="english_description" id="english_description" class="form-control">
-      </div>
+        </div>
+        <div class="form-group">
+            <label>请填写描述</label>
+            <input name="description" id="description" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>请填写英文描述</label>
+            <input name="english_description" id="english_description" class="form-control">
+        </div>
     </form>
     <input type="submit" id="CMSubmit" class="btn btn-default"></input>
 </div>
 <script>
     $("#CMSubmit").click(function () {
         $.ajax({
-                    type: "POST",
-                    url: "/CMs/"+"{{$course_code}}",
-                    data: {
-                        cm_code : $("#cm_code").find("option:selected").text(),
-                        name: $("#name").val(),
-                        EN_name: $("#EN_name").val(),
-                        CM_CO: $("#CM_CO").find("option:selected").text(),
-                        description: $("#description").val(),
-                        english_description: $("#english_description").val(),
-                    },
-                    success : function (data) {
-                        alert("成功填写！");
-                    },
-                    error : function (data) {
-                        alert("失败,原因可能为选择了重复的CM模块或中英文描述不符合要求！");
-                    }
-                });
-         });
+            type: "POST",
+            url: "/CMs/"+"{{$course_code}}",
+            data: {
+                cm_code : $("#cm_code").find("option:selected").text(),
+                name: $("#name").val(),
+                EN_name: $("#EN_name").val(),
+                CM_CO: $("#CM_CO").find("option:selected").text(),
+                description: $("#description").val(),
+                english_description: $("#english_description").val(),
+            },
+            success : function (data) {
+                alert("成功填写！");
+            },
+            error : function (data) {
+                alert("失败,原因可能为选择了重复的CM模块或中英文描述不符合要求！");
+            }
+        });
+    });
 </script>

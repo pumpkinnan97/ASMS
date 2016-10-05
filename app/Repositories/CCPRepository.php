@@ -26,7 +26,7 @@ class CCPRepository
 
     public function forTree($course_code)
     {
-        $resultSet = CCPInfo::where('course_code', $course_code)->get();
+        $resultSet = CCPInfo::where('course_code', $course_code)->get(['id','ccp_code','is_leaf_ccp','name','description','standard_score','expected_score','actual_score','level']);
 
         return empty($resultSet)? false : $resultSet;
     }

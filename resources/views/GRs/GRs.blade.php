@@ -9,7 +9,7 @@
                     <th>名称</th>
                     <th>原始描述</th>
                     <th>自定义描述</th>
-                    {{--<th>权重</th>--}}
+                    <th>相对子项GR剩余权重</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -19,7 +19,7 @@
                         <td>{{ $GRAt1->name }}</td>
                         <td>{{ $GRAt1->standart_description }}</td>
                         <td>{{ $GRAt1->ise_description }}</td>
-{{--                        <td>{{ $GRAt1->gr_as_weight }}</td>--}}
+                        <td>{{ $GRAt1->gr_ALLGR_rest_as_weight }}</td>
                     </tr>
                 @endforeach
                 </tbody>

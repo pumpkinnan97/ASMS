@@ -80,7 +80,7 @@ Route::post('/editGRs', 'GRController@editGRs');
 Route::post('/addGR','GRController@add');
 Route::get('/addGR','GRController@add');
 Route::delete('/deleteGR/{gr_code}',"GRController@deleteGR");
-Route::get('/deleteGR/{gr_code}',"GRController@deleteGR");
+Route::post('/deleteGR/{gr_code}',"GRController@deleteGR");
 Route::get('/addGRCourses','GRController@addGRCourses');
 Route::post('/addGRCourse','GRController@addGRCourse');
 Route::get('/addGRCourse','GRController@addGRCourse');
@@ -93,6 +93,7 @@ Route::post('/GRs/bind/{gr_code}/course/{course_code}', 'GRController@addGRAndCC
 
 Route::get('/CMs/{course_code}','CMController@show');
 Route::post('/CMs/{course_code}','CMController@addCM');
+Route::post('/deleteCM/{cm_code}','CMController@deleteCM');
 Route::get('/COs/{course_code}', 'COController@getCOs');
 Route::get('/editCOs/{course_code}', 'COController@editCOs');
 Route::post('/COs/{course_code}', 'COController@create');
@@ -137,4 +138,3 @@ Route::post('/upload/{course_code}/cos', 'UploadController@uploadCOs');
 Route::post('/upload/{course_code}/pos', 'UploadController@uploadPOs');
 Route::post('/upload/{course_code}/students_ccps', 'UploadController@uploadStudentsCCPs');
 Route::post('/upload/{course_code}/ccpTemp', 'UploadController@upLoadCCPTemp');
-Route::get('/hehe', 'heheController@hehe');

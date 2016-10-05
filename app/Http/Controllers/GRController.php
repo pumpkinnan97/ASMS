@@ -78,7 +78,12 @@ class GRController extends Controller
     {
         preg_match_all('/gr_\d?\d/i',$gr_code,$allgr_code);
         $ALLGR=DB::select("SELECT * FROM allgr_infos WHERE ALLGR_code=?",[$allgr_code[0][0]]);
-        $rest=$ALLGR[0]->gr_ALLGR_rest_as_weight-$request->gr_ALLGR_weight;
+        $back_ALLGR=DB::select("SELECT * FROM gr_infos WHERE gr_code=?",[$gr_code]);
+        $back_GR_weight=$ALLGR[0]->gr_ALLGR_rest_as_weight+$back_ALLGR[0]->gr_ALLGR_weight;
+        DB::update("UPDATE allgr_infos SET gr_ALLGR_rest_as_weight=? WHERE ALLGR_code=?", [$back_GR_weight, $allgr_code[0][0]]);
+
+        $ALLGR_SECOND=DB::select("SELECT * FROM allgr_infos WHERE ALLGR_code=?",[$allgr_code[0][0]]);
+        $rest=$ALLGR_SECOND[0]->gr_ALLGR_rest_as_weight-$request->gr_ALLGR_weight;
         if($rest>=0) {
             DB::update("UPDATE allgr_infos set gr_ALLGR_rest_as_weight=? where ALLGR_code=?",[$rest,$allgr_code[0][0]]);
             DB::update("UPDATE gr_infos SET name = ? ,standart_description = ?,ise_description = ?,gr_ALLGR_weight = ? where gr_code =?", [$request
@@ -105,8 +110,17 @@ class GRController extends Controller
         $new_GR->gr_ALLGR_weight=$request->gr_ALLGR_weight;
         $new_GR->CO_GR_rest_as_weight=1.00;
         $new_GR->ccp_GR_rest_as_weight=1.00;
-        $new_GR->save();
-        return json_encode(array('status' => 'true'));
+        preg_match_all('/gr_\d?\d/i',$request->gr_code,$allgr_code);
+        $ALLGR=DB::select("SELECT * FROM allgr_infos WHERE ALLGR_code=?",[$allgr_code[0][0]]);
+        $rest_GR_weight=$ALLGR[0]->gr_ALLGR_rest_as_weight-$request->gr_ALLGR_weight;
+        if($rest_GR_weight <= 0){
+            return "父项GR权重已不足";
+        }
+        else {
+            DB::update("UPDATE allgr_infos SET gr_ALLGR_rest_as_weight=? WHERE ALLGR_code=?", [$rest_GR_weight, $allgr_code[0][0]]);
+            $new_GR->save();
+            return json_encode(array('status' => 'true'));
+        }
 }
     public function deleteGR(Request $request, $gr_code)
     {
@@ -115,6 +129,7 @@ class GRController extends Controller
         $ALLGR=DB::select("SELECT * FROM allgr_infos WHERE ALLGR_code=?",[$allgr_code[0][0]]);
         $back_weight=$ALLGR[0]->gr_ALLGR_rest_as_weight+$GR[0]->gr_ALLGR_weight;
         DB::update("UPDATE allgr_infos SET gr_ALLGR_rest_as_weight = ? WHERE ALLGR_code=?",[$back_weight,$allgr_code[0][0]]);
+        DB::delete("DELETE FROM gr_courses WHERE gr_code=?",[$gr_code]);
         DB::delete("DELETE FROM gr_infos WHERE gr_code=?",[$gr_code]);
         return json_encode(array('status' => 'true'));
     }

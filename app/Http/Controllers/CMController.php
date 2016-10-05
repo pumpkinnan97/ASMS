@@ -27,7 +27,13 @@ class CMController extends Controller
         $CM->EN_name=$request->EN_name;
         $CM->description=$request->description;
         $CM->english_description=$request->english_description;
+        DB::insert("INSERT INTO cm_cos( cm_code,co_code) VALUES (?,?)",[$CM->cm_code,$request->CM_CO]);
         $CM->save();
         return "SAVE SUCCEED!";
+    }
+    public function deleteCM(Request $request,$cm_code){
+        DB::delete("DELETE FROM cm_cos WHERE cm_code = ?",[$cm_code])or die("删除失败！！");
+        DB::delete("DELETE FROM cm_infos WHERE cm_code=?",[$cm_code]) or die("删除失败！！");
+        return "删除成功！！！";
     }
 }

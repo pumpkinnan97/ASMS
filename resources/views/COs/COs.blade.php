@@ -12,6 +12,7 @@
                         <th>名称</th>
                         <th>描述</th>
                         <th>权重</th>
+                        <th>相对子项ccp剩余权重</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,10 +21,7 @@
                             <td>{{ $CO->name }}</td>
                             <td>{{ $CO->description }}</td>
                             <td data-test="{{ $CO->CO_GR_as_weight }}" class="test">{{ $CO->CO_GR_as_weight }}</td>
-                            <!-- <script>
-                            var test = $(".test").attr("data-test");
-                                console.log(test);
-                            </script> -->
+                            <td>{{$CO->ccp_CO_rest_as_weight}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -33,9 +31,6 @@
 </div>
 
 <div id="editCOsDialog"></div>
-<script>
-    //<td>{{ $CO->CO_GR_as_weight }}</td>
-</script>
 <script>
     $(".forEditCOs").click(function () {
         var course_code = "{{ $course_code }}";

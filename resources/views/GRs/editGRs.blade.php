@@ -50,16 +50,16 @@
             			url: "/editGRs/" + $(this).parent().parent().find(".GRgr_code").text(),
             			dataType: "json",
             			data: {
-            				"gr_ALLGR_weight": $(this).parent().parent().find(".GRgr_ALLGR_weight").val(),
-            				"name" : $(this).parent().parent().find(".GRname").val(),
-            				"standart_description": $(this).parent().parent().find(".GRstandart_description").val(),
-            				"ise_description": $(this).parent().parent().find(".GRise_description").val()
+            				gr_ALLGR_weight: $(this).parent().parent().find(".GRgr_ALLGR_weight").val(),
+            				name : $(this).parent().parent().find(".GRname").val(),
+            				standart_description: $(this).parent().parent().find(".GRstandart_description").val(),
+            				ise_description: $(this).parent().parent().find(".GRise_description").val()
             			},
             			success : function (data) {
-            				alert(data.responseText==""?"成功":"对应父项GR权重已不足！");
+            				alert("成功");
             			},
             			error : function (data) {
-            				alert(data.responseText==""?"成功":"对应父项GR权重已不足！");
+            				alert(data.responseText);
             			}
             		});
             	});
