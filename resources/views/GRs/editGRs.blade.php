@@ -53,10 +53,13 @@
             				gr_ALLGR_weight: $(this).parent().parent().find(".GRgr_ALLGR_weight").val(),
             				name : $(this).parent().parent().find(".GRname").val(),
             				standart_description: $(this).parent().parent().find(".GRstandart_description").val(),
-            				ise_description: $(this).parent().parent().find(".GRise_description").val(),
+            				ise_description: $(this).parent().parent().find(".GRise_description").val()
             			},
             			success : function (data) {
-            				alert(1);
+            				alert("成功");
+            			},
+            			error : function (data) {
+            				alert(data.responseText);
             			}
             		});
             	});
