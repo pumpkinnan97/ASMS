@@ -1,5 +1,12 @@
+        <style>
+            table th,table td {
+                text-align: center;
+            }
+            input::-ms-input-placeholder{text-align: center;} 
+            input::-webkit-input-placeholder{text-align: center;} 
 
-        <table class="table-bordered">
+        </style>
+        <table class="table-bordered table table-hover">
             <tr>
                 <th>GR代码</th>
                 <th>子项GR名称</th>
@@ -16,7 +23,7 @@
                     <td><p class="changeable" type="text" placeholder="原始描述" value="{{ $GR->standart_description }}" data-gr-code="{{ $GR->gr_code }}" data-type="standart_description">{{ $GR->standart_description }}</p></td>
                     <td><p class="changeable" type="text" placeholder="自定义描述" value="{{$GR->ise_description}}" data-gr-code="{{$GR->gr_code}}" data-type="ise_description">{{$GR->ise_description}}</p></td>
                     <td><p class="changeable" type="text" placeholder="指标权重" value="{{ $GR->gr_ALLGR_weight }}" data-gr-code="{{ $GR->gr_code }}" data-type="gr_ALLGR_weight">{{ $GR->gr_ALLGR_weight }}</p></td>
-                    <td><button id="{{ $GR->gr_code }}" class="delete btn-danger" data-gr-code="{{ $GR->gr_code }}">删除</button></td>
+                    <td><button id="{{ $GR->gr_code }}" class="delete btn-danger btn" data-gr-code="{{ $GR->gr_code }}">删除</button></td>
                 </tr>
             @endforeach
             <tr>
@@ -25,13 +32,13 @@
                 <td><input id="standart_description" type="text" placeholder="填写原始描述"></td>
                 <td><input id="ise_description" type="text" placeholder="填写自定义描述"></td>
                 <td><input id="gr_ALLGR_weight" type="text" placeholder="填写对应父项GR权重"></td>
-                <td><input id="create" type="submit" value="添加" class="btn-block"></td>
+                <td><input id="create" type="submit" value="添加" class="btn btn-default"></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-        <script src="http://code.jquery.com/jquery-1.4.1.min.js"type="text/javascript">
+    <script>
     $("#create").click(function () {
         $.ajax({
             type: 'POST',
@@ -75,7 +82,7 @@
 
             },
             error: function(xhr, type){
-                alert('Ajax error!')
+                alert('删除未成功，请联系系统管理员！');
             }
         });
     })

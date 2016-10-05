@@ -143,15 +143,16 @@
         //选中元素变色
         function markSelected(obj)
         {
-            $('.forCOs').css({ 'background-color' :  ''});
-            $('.forCCPs').css({ 'background-color' :  ''});
-            $('.addCourse').css({ 'background-color' :  ''});
-            $('.forCOsAndCCPs').css({ 'background-color' :  ''});
-            $('.forGRsAndCCPs').css({ 'background-color' :  ''});
-            $('.forStudentsCCPs').css({ 'background-color' :  ''});
-            $('.forStudentsCO_GR').css({ 'background-color' :  ''});
-            $('#editGRs').css({ 'background-color' :  ''});
-            $('#addGRs').css({ 'background-color' :  ''});
+            // $('.forCOs').css({ 'background-color' :  ''});
+            // $('.forCCPs').css({ 'background-color' :  ''});
+            // $('.addCourse').css({ 'background-color' :  ''});
+            // $('.forCOsAndCCPs').css({ 'background-color' :  ''});
+            // $('.forGRsAndCCPs').css({ 'background-color' :  ''});
+            // $('.forStudentsCCPs').css({ 'background-color' :  ''});
+            // $('.forStudentsCO_GR').css({ 'background-color' :  ''});
+            // $('#editGRs').css({ 'background-color' :  ''});
+            // $('#addGRs').css({ 'background-color' :  ''});
+            $(".tree li span").css({ 'background-color' :  '#eee'});
             $(obj).css({ 'background-color' :  'lightgreen'});
             scrollToTop();
         }
