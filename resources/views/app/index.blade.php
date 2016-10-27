@@ -4,7 +4,7 @@
    <div class="tree well col-md-3">
         <ul>
             <li>
-                <span id="forGRs"class="icon-folder-open"><i class="icon-folder-open"></i>毕业要求指标(GR)</span>
+                <span id="forGRs" class="icon-folder-open"><i class="icon-folder-open"></i>毕业要求指标(GR)</span>
                 <ul>
                    <li><span id="editGRs"><i class="icon-minus-sign"></i>修改毕业要求(EDITGRs)</span></li>
                     <li><span id="addGRs"><i class="icon-minus-sign"></i>新增毕业要求(ADDGRs)</span></li>
@@ -15,48 +15,15 @@
                 <span id="show"><i class="icon-folder-open"></i>添加课程信息(ADDCourse)</span>
             </li>
             <li>
-                <span><i class="icon-folder-open"></i>课程信息管理(CI)</span>
-                <ul>
-                    @foreach($Courses as $course)
-                    <li>
-                        <span><i class="icon-minus-sign"></i>{{ $course->name }}</span>
-                        <ul>
-                            {{--<li>--}}
-                                {{--<span ><i class="icon-leaf"></i>教学大纲(Syllabus)</span></span>--}}
-                            {{--</li>--}}
-                            <li>
-                                <span class="forCOs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>课程目标管理(CO)</span></span>
-                            </li>
-                            <li>
-                                <span class="forCMs" data-code="{{$course->course_code}}"><i class="icon-leaf">课程模块信息管理(CM)</i> </span></span>
-                            </li>
-                            <li>
-                                <span class="forCCPs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>课程考核点管理(CCP)</span></span>
-                            </li>
-                            <li>
-                                <span class="forCOsAndCCPs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>CO达成度相关CCP管理</span></span>
-                            </li>
-                            <li>
-                                <span class="forGRsAndCCPs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>GR达成度相关CCP管理</span></span>
-                            </li>
-                            <li>
-                                <span class="forStudentsCCPs" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>学生CCP数据管理</span></span>
-                            </li>
-                            <li>
-                                <span class="forStudentsCO_GR" data-code="{{ $course->course_code }}"><i class="icon-leaf"></i>CO&GR达成度计算</span></span>
-                            </li>
-                        </ul>
-                        </span>
-                    </li>
-                    @endforeach
-                </ul>
-            </li>
-        </ul>
+                <a href="/CCPsView"><span><i class="icon-folder-open"></i>课程信息管理(CI)</span></a>
+            </ul>
+                
     </div>
 
     <div id="module" class="col-md-9"></div>
 
     <script type="text/javascript">
+        $("#forGRs").removeClass("parent_li");
         $('#forGRs').click(function (){
             markSelected(this);
             $.get("{{ url('/GRs') }}" , function(result){

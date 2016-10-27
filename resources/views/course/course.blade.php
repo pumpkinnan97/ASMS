@@ -73,11 +73,53 @@
 </form>
 <button id="courseSubmit" class="btn btn-default">提交</button>
 <script>
+	$(document).ready(function () {
+		if (!localStorage.course) {
+        localStorage.todolist = JSON.stringify({});
+      }
+      var courseJson = JSON.parse(localStorage.course);
+      $("#term").find("option:selected").text(courseJson.term);
+      $("#course_code").val(courseJson.course_code);
+      $("#name").val(courseJson.name);
+      $("#english_name").val(courseJson.english_name);
+      $("#total_hours").val(courseJson.total_hours);
+      $("#credit").val(courseJson.credit);
+      $("#type").find("option:selected").text(courseJson.type);
+      $("#major").val(courseJson.major);
+      $("#prerequisite_course").val(courseJson.prerequisite_course);
+      $("#description").val(courseJson.description);
+      $("#english_description").val(courseJson.english_description);
+      $("#course_group").val(courseJson.course_group);
+      $("#author").val(courseJson.author);
+      $("#test_way").val(courseJson.test_way);
+      $("#advice_books").val(courseJson.advice_books);
+      $("#cd_name").val(courseJson.cd_name);
+	})
+	$(".form-control").change(function () {
+		window.localStorage.course = JSON.stringify({
+                        term : $("#term").find("option:selected").text(),
+                        course_code : $("#course_code").val(),
+                        name: $("#name").val(),
+                        english_name: $("#english_name").val(),
+                        total_hours: $("#total_hours").val(),
+                        credit: $("#credit").val(),
+                        type: $("#type").find("option:selected").text(),
+                        major: $("#major").val(),
+                        prerequisite_course: $("#prerequisite_course").val(),
+                        description: $("#description").val(),
+                        english_description: $("#english_description").val(),
+                        course_group: $("#course_group").val(),
+                        author: $("#author").val(),
+                        test_way: $("#test_way").val(),
+                        advice_books: $("#advice_books").val(),
+                        cd_name: $("#cd_name").val(),                  
+                    });
+	})
     $("#courseSubmit").click(function () {
         $.ajax({
                     type: "POST",
                     url: "/addCourse",
-                    dataType: "json",
+                    // dataType: "json",
                     data: {
                         term : $("#term").find("option:selected").text(),
                         course_code : $("#course_code").val(),
@@ -96,12 +138,13 @@
                         advice_books: $("#advice_books").val(),
                         cd_name: $("#cd_name").val(),                  
                     },
-                    // success : function (data) {
-                    //     alert("成功");
-                    // },
-                    // error : function (data) {
-                    //     console.log(data);
-                    // }
+                    success : function (data) {
+                        alert("成功");
+                        window.localStorage.course = JSON.stringify({});
+                    },
+                    error : function (data) {
+                        alert("失败，原因可能是已有重复课程，具体原因请联系系统管理员!");
+                    }
                 });
          });
 </script>

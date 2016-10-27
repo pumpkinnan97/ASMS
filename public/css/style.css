@@ -31,10 +31,16 @@
     width:1px
 }
 .tree li::after {
-    border-top:1px solid #999;
+    /*border-top:1px solid #999;*/
     height:20px;
     top:25px;
     width:25px
+}
+.parent_li{
+    display: inline-block;
+}
+.parent_li li::after {
+    border-top:1px solid #999;
 }
 .tree li span {
     -moz-border-radius:5px;
@@ -54,8 +60,30 @@
 .tree li:last-child::before {
     height:26px
 }
-.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+/*.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
     background:#eee;
     border:1px solid #94a0b4;
     color:#000
+}*/
+.tree{
+    height: 540px;
+    overflow-y: scroll;
+}
+/*.CIindex{
+    display: none;
+}*/
+    /*.parent_li{
+        display: none;
+    }*/
+.CIindex>button{
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}
+#forGRs,#forCIs{
+    width: 40%;
+    margin: 0 30%;
+}
+#forCIs{
+    margin-top: 10px;
 }

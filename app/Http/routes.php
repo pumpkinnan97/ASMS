@@ -138,3 +138,4 @@ Route::post('/upload/{course_code}/cos', 'UploadController@uploadCOs');
 Route::post('/upload/{course_code}/pos', 'UploadController@uploadPOs');
 Route::post('/upload/{course_code}/students_ccps', 'UploadController@uploadStudentsCCPs');
 Route::post('/upload/{course_code}/ccpTemp', 'UploadController@upLoadCCPTemp');
+Route::get('/CCPsView', 'CCPsViewController@CCPsView');

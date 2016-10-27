@@ -40,15 +40,15 @@
             	$(".GRalert").hide();
             	$(".submitGRs").click(function () {
             		var GRgr_ALLGR_weight = $(this).parent().parent().find(".GRgr_ALLGR_weight").val();
-            		if (GRgr_ALLGR_weight<0||GRgr_ALLGR_weight>1) {
-            			$(".GRalert").show("fast");
-            			return;
-            		};
+            		// if (GRgr_ALLGR_weight<0||GRgr_ALLGR_weight>1) {
+            		// 	$(".GRalert").show("fast");
+            		// 	return;
+            		// };
 
             		$.ajax({
             			type: "POST",
             			url: "/editGRs/" + $(this).parent().parent().find(".GRgr_code").text(),
-            			dataType: "json",
+            			// dataType: "json",
             			data: {
             				gr_ALLGR_weight: $(this).parent().parent().find(".GRgr_ALLGR_weight").val(),
             				name : $(this).parent().parent().find(".GRname").val(),
